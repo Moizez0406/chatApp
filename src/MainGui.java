@@ -13,10 +13,7 @@ public class MainGui extends JFrame {
     public MainGui() throws IOException {
         super("Chat Server");
         setupGUI();
-        // actionHandler.connect();
-    
-            actionHandler.receiveMessages();
-        
+        actionHandler.receiveMessages();
         clientSocket = new Socket(SERVER_IP, SERVER_PORT);
         clientSocket.getInetAddress();
         System.out.println("Connected to server.");
@@ -24,7 +21,7 @@ public class MainGui extends JFrame {
     }
 
     private void setupGUI() {
-        //Dark theme
+        // Dark theme
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
             UIManager.put("nimbusDisabledText", new Color(50, 49, 49));
@@ -50,7 +47,7 @@ public class MainGui extends JFrame {
         JTextArea myName = new JTextArea(1, 10);
         myName.setEditable(false);
 
-        //Fields
+        // Fields
         JTextField messageField = new JTextField(50);
         messageField.setBackground(new Color(40, 40, 40));
         messageField.setForeground(new Color(230, 230, 230));
@@ -66,7 +63,7 @@ public class MainGui extends JFrame {
         c.setLayout(new BorderLayout());
         c.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); //Panel for the buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Panel for the buttons
         buttonPanel.add(getUsers);
         buttonPanel.add(setName);
         buttonPanel.add(getHistory);
@@ -91,6 +88,7 @@ public class MainGui extends JFrame {
         pack();
         setVisible(true);
     }
+
     public static void main(String[] args) throws IOException {
         new MainGui();
     }

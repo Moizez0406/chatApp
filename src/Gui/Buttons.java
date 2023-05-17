@@ -1,4 +1,5 @@
 package Gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -14,18 +15,18 @@ public class Buttons {
         return button;
     }
 
-    public static JPanel createButtonPanel(){
+    public static JPanel createButtonPanel() {
         JPanel newUserButtonPanel = new JPanel();
         newUserButtonPanel.setLayout(new BoxLayout(newUserButtonPanel, BoxLayout.PAGE_AXIS));
         newUserButtonPanel.setBackground(new Color(40, 40, 40));
         return newUserButtonPanel;
     }
 
-    public static void createUserButtons(String[] listUsers, JPanel newUserButtonPanel,ActionHandler actionHandler){
+    public static void createUserButtons(String[] listUsers, JPanel newUserButtonPanel, ActionHandler actionHandler) {
         for (String str : listUsers) {
-            JButton userButton = Buttons.createButton(str,e -> actionHandler.setChat(str));
+            JButton userButton = Buttons.createButton(str, e -> actionHandler.setChat(str));
             newUserButtonPanel.add(userButton);
             newUserButtonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        }       
+        }
     }
 }

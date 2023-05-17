@@ -1,6 +1,5 @@
 package Gui;
 
-import java.io.*;
 import java.awt.*;
 import javax.swing.*;
 import java.net.Socket;
@@ -16,32 +15,24 @@ public class ActionHandler {
     private final Socket clientSocket;
     private Socket autoClientSocket;
     private String[] listUsers;
-    
+
     public ActionHandler(JTextArea chatArea, JTextArea currentChat, JTextField messageField,
-                         JTextArea myName, JTextArea userArea, Socket clientSocket) {
+            JTextArea myName, JTextArea userArea, Socket clientSocket) {
         this.chatArea = chatArea;
         this.currentChat = currentChat;
         this.messageField = messageField;
         this.myName = myName;
         this.userArea = userArea;
-        this.clientSocket = clientSocket;   
+        this.clientSocket = clientSocket;
     }
-    public void connect() throws IOException {
-        try {
-            autoClientSocket = new Socket(clientSocket.getInetAddress(), clientSocket.getPort());
-            receiveMessages();
-        } catch (IOException error) {
-            error.printStackTrace();
-        }
-        System.out.println("Connected to server.");
-        System.out.println(clientSocket);
-    }
+
     public void receiveMessages() {
         Thread receiveThread = new Thread(() -> {
             UserActions.automaticallyReceive(autoClientSocket, chatArea, currentChat);
         });
         receiveThread.start();
     }
+
     public ActionListener sendButtonListener() {
         return e -> {
             String message = messageField.getText();
@@ -56,6 +47,7 @@ public class ActionHandler {
             }
         };
     }
+
     public ActionListener getUsersListener() {
         return event -> {
             listUsers = UserActions.getUserList(clientSocket, "getUsers").split("\\|");
@@ -69,14 +61,16 @@ public class ActionHandler {
             userButtonScrollPane.repaint();
         };
     }
+
     public void setChat(String user) {
         String currentUser = currentChat.getText();
-        if(!currentUser.equals("Chatting with: "+ user)) {
+        if (!currentUser.equals("Chatting with: " + user)) {
             chatArea.setText("");
             currentChat.setText("");
             currentChat.setText("Chatting with: " + user);
         }
     }
+
     public ActionListener GetHistoryListener() {
         return e -> {
             String username = myName.getText();
@@ -84,10 +78,11 @@ public class ActionHandler {
             UserActions.getHistory(clientSocket, username, receiver);
         };
     }
+
     public ActionListener setNameListener() {
         return e -> {
             String username = messageField.getText();
-            if (UserActions.checkToseeIfUserExists(listUsers,username)) {
+            if (UserActions.checkToseeIfUserExists(listUsers, username)) {
                 myName.setText("");
                 currentChat.setText("Already taken.");
             } else {
