@@ -7,7 +7,6 @@ import java.util.List;
 import Server.*;
 public class Main {
     private static final int PORT = 25; // Specify the port number to listen on
-
     public static void main(String[] args) {
         int i = 1;
         int auto = 1;

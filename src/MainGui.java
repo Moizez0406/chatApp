@@ -2,17 +2,27 @@ import Gui.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.Socket;
 
 public class MainGui extends JFrame {
     private static final String SERVER_IP = "192.168.56.1"; // Server IP address
     private static final int SERVER_PORT = 25; // Server port number
+    private Socket clientSocket = null;
     private ActionHandler actionHandler;
+
     public MainGui() throws IOException {
         super("Chat Server");
         setupGUI();
-        actionHandler.connectAutoResponse();
-        actionHandler.connect();
+        // actionHandler.connect();
+    
+            actionHandler.receiveMessages();
+        
+        clientSocket = new Socket(SERVER_IP, SERVER_PORT);
+        clientSocket.getInetAddress();
+        System.out.println("Connected to server.");
+        System.out.println(clientSocket);
     }
+
     private void setupGUI() {
         //Dark theme
         try {
@@ -46,7 +56,7 @@ public class MainGui extends JFrame {
         messageField.setForeground(new Color(230, 230, 230));
         // Button
         actionHandler = new ActionHandler(chatArea, currentChat, messageField,
-                myName, userArea,SERVER_IP,SERVER_PORT);
+                myName, userArea, clientSocket);
         JButton sendButton = Buttons.createButton("Send", actionHandler.sendButtonListener());
         JButton getUsers = Buttons.createButton("Get Users", actionHandler.getUsersListener());
         JButton getHistory = Buttons.createButton("get History", actionHandler.GetHistoryListener());
