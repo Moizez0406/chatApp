@@ -19,7 +19,7 @@ public class UserActions {
         for (String str : listUsers) {
             if (str.equals(user)) {
                 return true;
-            } 
+            }
         }
         return false;
     }
@@ -86,3 +86,4 @@ public class UserActions {
         userArea.setText("User status: \n\n");
     }
 }
+

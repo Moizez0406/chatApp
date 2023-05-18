@@ -2,31 +2,33 @@ package Gui;
 
 import java.awt.*;
 import javax.swing.*;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.Objects;
 import java.awt.event.ActionListener;
 
 public class ActionHandler {
     private final JTextArea myName;
-    private final JTextArea chatArea;
+    private static JTextArea chatArea = null;
     private final JTextArea userArea;
-    private final JTextArea currentChat;
+    private static JTextArea currentChat = null;
     private final JTextField messageField;
     private final Socket clientSocket;
-    private Socket autoClientSocket;
     private String[] listUsers;
 
     public ActionHandler(JTextArea chatArea, JTextArea currentChat, JTextField messageField,
-            JTextArea myName, JTextArea userArea, Socket clientSocket) {
-        this.chatArea = chatArea;
-        this.currentChat = currentChat;
+                         JTextArea myName, JTextArea userArea, Socket autoclientSocket) throws IOException {
+        ActionHandler.chatArea = chatArea;
+        ActionHandler.currentChat = currentChat;
         this.messageField = messageField;
         this.myName = myName;
         this.userArea = userArea;
-        this.clientSocket = clientSocket;
+        this.clientSocket = new Socket(autoclientSocket.getInetAddress(), autoclientSocket.getPort());
+        System.out.println("Connected to server");
+        System.out.println(this.clientSocket);
     }
 
-    public void receiveMessages() {
+    public static void receiveMessages(Socket autoClientSocket) {
         Thread receiveThread = new Thread(() -> {
             UserActions.automaticallyReceive(autoClientSocket, chatArea, currentChat);
         });
@@ -51,10 +53,10 @@ public class ActionHandler {
     public ActionListener getUsersListener() {
         return event -> {
             listUsers = UserActions.getUserList(clientSocket, "getUsers").split("\\|");
-            JPanel newUserButtonPanel = Buttons.createButtonPanel();
+            JPanel newUserButtonPanel = Gui.Buttons.createButtonPanel();
             JScrollPane userButtonScrollPane = new JScrollPane(newUserButtonPanel);
             UserActions.updateArea(userArea);
-            Buttons.createUserButtons(listUsers, newUserButtonPanel, this);
+            Gui.Buttons.createUserButtons(listUsers, newUserButtonPanel, this);
             userArea.setLayout(new BorderLayout());
             userArea.add(userButtonScrollPane, BorderLayout.CENTER);
             userButtonScrollPane.revalidate();

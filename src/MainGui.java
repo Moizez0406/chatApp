@@ -1,4 +1,5 @@
 import Gui.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -7,20 +8,13 @@ import java.net.Socket;
 public class MainGui extends JFrame {
     private static final String SERVER_IP = "192.168.56.1"; // Server IP address
     private static final int SERVER_PORT = 25; // Server port number
-    private Socket clientSocket = null;
-    private ActionHandler actionHandler;
 
     public MainGui() throws IOException {
         super("Chat Server");
         setupGUI();
-        actionHandler.receiveMessages();
-        clientSocket = new Socket(SERVER_IP, SERVER_PORT);
-        clientSocket.getInetAddress();
-        System.out.println("Connected to server.");
-        System.out.println(clientSocket);
     }
 
-    private void setupGUI() {
+    private void setupGUI() throws IOException {
         // Dark theme
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -51,13 +45,16 @@ public class MainGui extends JFrame {
         JTextField messageField = new JTextField(50);
         messageField.setBackground(new Color(40, 40, 40));
         messageField.setForeground(new Color(230, 230, 230));
+
         // Button
-        actionHandler = new ActionHandler(chatArea, currentChat, messageField,
-                myName, userArea, clientSocket);
-        JButton sendButton = Buttons.createButton("Send", actionHandler.sendButtonListener());
-        JButton getUsers = Buttons.createButton("Get Users", actionHandler.getUsersListener());
-        JButton getHistory = Buttons.createButton("get History", actionHandler.GetHistoryListener());
-        JButton setName = Buttons.createButton("set Name", actionHandler.setNameListener());
+        Socket autoclientSocket = new Socket(SERVER_IP, SERVER_PORT);
+        ActionHandler.receiveMessages(autoclientSocket);
+        ActionHandler actionHandler = new ActionHandler(chatArea, currentChat, messageField,
+                myName, userArea, autoclientSocket);
+        JButton sendButton = Gui.Buttons.createButton("Send", actionHandler.sendButtonListener());
+        JButton getUsers = Gui.Buttons.createButton("Get Users", actionHandler.getUsersListener());
+        JButton getHistory = Gui.Buttons.createButton("get History", actionHandler.GetHistoryListener());
+        JButton setName = Gui.Buttons.createButton("set Name", actionHandler.setNameListener());
         // Add to the gui
         Container c = getContentPane();
         c.setLayout(new BorderLayout());
