@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class MainGui extends JFrame {
-    private static final String SERVER_IP = "192.168.56.1"; // Server IP address
+    private static final String SERVER_IP = "192.168.1.12"; // Server IP address
     private static final int SERVER_PORT = 25; // Server port number
 
     public MainGui() throws IOException {
