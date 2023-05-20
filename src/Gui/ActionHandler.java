@@ -17,7 +17,7 @@ public class ActionHandler {
     private String[] listUsers;
 
     public ActionHandler(JTextArea chatArea, JTextArea currentChat, JTextField messageField,
-                         JTextArea myName, JTextArea userArea, Socket autoclientSocket) throws IOException {
+            JTextArea myName, JTextArea userArea, Socket autoclientSocket) throws IOException {
         ActionHandler.chatArea = chatArea;
         ActionHandler.currentChat = currentChat;
         this.messageField = messageField;

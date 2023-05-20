@@ -22,6 +22,7 @@ public class MainGui extends JFrame {
             UIManager.put("nimbusFocus", new Color(115, 164, 209));
             UIManager.put("nimbusLightBackground", new Color(38, 38, 38));
             UIManager.put("nimbusSelectedText", new Color(255, 255, 255));
+
             UIManager.put("text", new Color(230, 230, 230));
         } catch (Exception e) {
             e.printStackTrace();
