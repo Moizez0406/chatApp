@@ -22,25 +22,16 @@ public class MainGui extends JFrame {
             UIManager.put("nimbusFocus", new Color(115, 164, 209));
             UIManager.put("nimbusLightBackground", new Color(38, 38, 38));
             UIManager.put("nimbusSelectedText", new Color(255, 255, 255));
-
             UIManager.put("text", new Color(230, 230, 230));
         } catch (Exception e) {
             e.printStackTrace();
         }
         // Chat area
-        JTextArea chatArea = new JTextArea(20, 40);
-        chatArea.setEditable(false);
+        JTextArea chatArea = Buttons.createAreas(20, 40, false);
+        JTextArea userArea = Buttons.createAreas(20, 20, false, "       NOTHING TO SHOW \n");
+        JTextArea currentChat = Buttons.createAreas(1, 20, false);
+        JTextArea myName = Buttons.createAreas(1, 10, false);
         JScrollPane scrollPane = new JScrollPane(chatArea);
-
-        JTextArea userArea = new JTextArea(20, 20);
-        userArea.setEditable(false);
-        userArea.setText("       NOTHING TO SHOW \n");
-
-        JTextArea currentChat = new JTextArea(1, 20);
-        currentChat.setEditable(false);
-
-        JTextArea myName = new JTextArea(1, 10);
-        myName.setEditable(false);
 
         // Fields
         JTextField messageField = new JTextField(50);
@@ -62,15 +53,12 @@ public class MainGui extends JFrame {
         c.add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Panel for the buttons
-        buttonPanel.add(getUsers);
-        buttonPanel.add(setName);
-        buttonPanel.add(getHistory);
-        buttonPanel.add(currentChat);
-        buttonPanel.add(myName);
-        buttonPanel.setBackground(new Color(40, 40, 40));
+        // biuld the panel
+        Buttons.builddButton(buttonPanel, getUsers, setName, getHistory, currentChat, myName);
 
         JPanel bottomPanel = new JPanel();
         JPanel topPanel = new JPanel();
+        // set the layout
         bottomPanel.setLayout(new BorderLayout());
         bottomPanel.add(messageField, BorderLayout.WEST);
         bottomPanel.add(sendButton, BorderLayout.CENTER);

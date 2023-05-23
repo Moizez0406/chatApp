@@ -29,4 +29,27 @@ public class Buttons {
             newUserButtonPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         }
     }
+
+    public static void builddButton(JPanel buttonPanel, JButton getUsers, JButton setName, JButton getHistory,
+            JTextArea currentChat, JTextArea myName) {
+        buttonPanel.add(getUsers);
+        buttonPanel.add(setName);
+        buttonPanel.add(getHistory);
+        buttonPanel.add(currentChat);
+        buttonPanel.add(myName);
+        buttonPanel.setBackground(new Color(40, 40, 40));
+    };
+
+    public static JTextArea createAreas(int rows, int columns, boolean b) {
+        JTextArea area = new JTextArea(rows, columns);
+        area.setEditable(b);
+        return area;
+    }
+
+    public static JTextArea createAreas(int rows, int columns, boolean b, String content) {
+        JTextArea area = new JTextArea(rows, columns);
+        area.setEditable(b);
+        area.setText(content);
+        return area;
+    }
 }

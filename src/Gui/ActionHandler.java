@@ -75,9 +75,9 @@ public class ActionHandler {
 
     public ActionListener GetHistoryListener() {
         return e -> {
-            String username = myName.getText();
-            String receiver = UserActions.getFromCurrentChat(currentChat);
-            UserActions.getHistory(clientSocket, username, receiver);
+            // String username = myName.getText();
+            // String receiver = UserActions.getFromCurrentChat(currentChat);
+            // UserActions.getHistory(clientSocket, username, receiver);
         };
     }
 
