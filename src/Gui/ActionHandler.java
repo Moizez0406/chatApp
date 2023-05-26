@@ -14,7 +14,11 @@ public class ActionHandler {
     private static JTextArea currentChat = null;
     private final JTextField messageField;
     private final Socket clientSocket;
-    private String[] listUsers;
+    private static String[] listUsers;
+
+    public static String[] getUserList() {
+        return listUsers;
+    }
 
     public ActionHandler(JTextArea chatArea, JTextArea currentChat, JTextField messageField,
             JTextArea myName, JTextArea userArea, Socket autoclientSocket) throws IOException {
@@ -90,6 +94,7 @@ public class ActionHandler {
             } else {
                 myName.setText(username);
                 UserActions.setName(clientSocket, username);
+                Finder.createUserDoc(username);
             }
         };
     }

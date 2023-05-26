@@ -43,8 +43,14 @@ public class MainGui extends JFrame {
         String username = usernameField.getText();
         if (!username.isEmpty()) {
             dispose();
+            if (!Finder.findUser(username)) {
+                JOptionPane.showMessageDialog(null, "User not found\nCreating new user");
+                System.out.println("User not found");
+            } else {
+                JOptionPane.showMessageDialog(null, "User found\nGetting user data");
+            }
             try {
-                new GuiPart(username);
+                new GuiSide(username);
             } catch (IOException ex) {
                 ex.printStackTrace();
                 // Handle any exception that may occur during setup

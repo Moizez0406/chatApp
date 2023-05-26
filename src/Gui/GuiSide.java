@@ -5,11 +5,11 @@ import java.awt.*;
 import java.io.IOException;
 import java.net.Socket;
 
-public class GuiPart extends JFrame {
+public class GuiSide extends JFrame {
     private static final String SERVER_IP = "192.168.1.12"; // Server IP address
-    private static final int SERVER_PORT = 25; // Server port number
+    private static final int SERVER_PORT = 1444; // Server port number
 
-    public GuiPart(String username) throws IOException {
+    public GuiSide(String username) throws IOException {
         super("Chat Server");
         setupGUI(username);
     }
