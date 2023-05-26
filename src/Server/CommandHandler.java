@@ -10,14 +10,14 @@ import java.io.PrintWriter;
 
 public class CommandHandler implements Runnable {
     private final Socket clientSocket;
-    List<User> userSockets;
+    List<User> userList;
     List<History> historyList = new ArrayList<>();
     public final String session;
     private PrintWriter writer;
 
     public CommandHandler(Socket clientSocket, List<User> userSockets) {
         this.clientSocket = clientSocket;
-        this.userSockets = userSockets;
+        this.userList = userSockets;
         this.session = "new one";
     }
 
@@ -25,14 +25,14 @@ public class CommandHandler implements Runnable {
         switch (command[0]) {
             case "SendMsg":
                 Finder myFind = new Finder();
-                if (myFind.findSenderReceiver(command[2], command[3], userSockets)) {
+                if (myFind.findSenderReceiver(command[2], command[3], userList)) {
                     Message message = new Message(myFind.getSender(), myFind.getReceiver(), command[4]);
                     message.sendMsg();
                 }
 
             case "getUsers":
                 StringBuilder response = new StringBuilder();
-                for (User user : userSockets) {
+                for (User user : userList) {
                     response.append(user.getUsername()).append("|");
                 }
 
@@ -42,7 +42,7 @@ public class CommandHandler implements Runnable {
 
             case "ChangeName":
                 int givenPort = Integer.parseInt(command[1]);
-                for (User user : userSockets) {
+                for (User user : userList) {
                     if (user.getSocket().getPort() == givenPort) {
                         user.setUsername(command[2]);
                     }
@@ -84,12 +84,12 @@ public class CommandHandler implements Runnable {
         } catch (SocketException e) {
             // logger.error("Client connection reset: " + e.getMessage() + " --> " +
             // clientSocket);
+            System.out.println("Client connection reset: " + e.getMessage() + " --> " + clientSocket);
+            userList.removeIf(user -> user.getSocket().equals(clientSocket));
             // Handle the reset connection here
         } catch (IOException e) {
             // logger.error("An error occurred in the CommandHandler: " + e.getMessage());
         } finally {
-            // ... other code ...
-
             // logger.info("Client disconnected: " + clientSocket);
         }
     }
