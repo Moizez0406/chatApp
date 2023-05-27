@@ -9,6 +9,15 @@ import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 
 public class UserActions {
+    public static void loadUser(Socket autosocket, Socket socket, String selfname, String username) {
+        try {
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
+            writer.println("reconnectUser|" + selfname + "|" + username);
+        } catch (IOException error) {
+            error.printStackTrace();
+        }
+    }
+
     public static String getFromCurrentChat(JTextArea currentChat) {
         int startIndex = currentChat.getText().indexOf(":") + 1;
         String receiver = currentChat.getText().substring(startIndex).trim();
@@ -37,11 +46,7 @@ public class UserActions {
         try {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             writer.println("SendMsg|1|" + myName.getText() + "|" + receiver + "|" + message);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            String response = reader.readLine();
-            if (response.equals("User is not active")) {
-                System.out.println("User is not active!");
-            }
+
         } catch (IOException error) {
             error.printStackTrace();
         }
@@ -53,6 +58,9 @@ public class UserActions {
             while (true) {
                 String message = reader.readLine();
                 if (message != null) {
+                    if (message.equals("User is not active")) {
+                        System.out.println("automaticResponse: User is not active!");
+                    }
                     String fromUser = UserActions.getFromCurrentChat(currentChat);
                     SwingUtilities.invokeLater(() -> chatArea.append(fromUser + ":  " + message + "\n"));
                 }

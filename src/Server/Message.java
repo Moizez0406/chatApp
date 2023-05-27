@@ -23,8 +23,8 @@ public class Message {
     public void sendMsg() {
         try {
             if (receiver.isActive() == false) {
-                writer = new PrintWriter(sender.getSocket().getOutputStream(), true);
-                writer.println("User is not active");
+                autoWriter = new PrintWriter(sender.getAutoSocket().getOutputStream(), true);
+                autoWriter.println("User is not active");
                 System.out.println("User is not active");
                 return;
             } else {

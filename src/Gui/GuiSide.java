@@ -9,12 +9,12 @@ public class GuiSide extends JFrame {
     private static final String SERVER_IP = "192.168.1.12"; // Server IP address
     private static final int SERVER_PORT = 1444; // Server port number
 
-    public GuiSide(String username) throws IOException {
+    public GuiSide(String username, boolean b) throws IOException {
         super("Chat Server");
-        setupGUI(username);
+        setupGUI(username, b);
     }
 
-    private void setupGUI(String username) throws IOException {
+    private void setupGUI(String username, boolean b) throws IOException {
         // Dark theme
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
@@ -43,6 +43,11 @@ public class GuiSide extends JFrame {
         ActionHandler.receiveMessages(autoclientSocket);
         ActionHandler actionHandler = new ActionHandler(chatArea, currentChat, messageField,
                 myName, userArea, autoclientSocket);
+        if (b) {
+            UserActions.loadUser(autoclientSocket, actionHandler.getClientSocket(), actionHandler.getDefaultName(),
+                    username);
+            System.out.println("User loaded");
+        }
         JButton sendButton = Gui.Buttons.createButton("Send", actionHandler.sendButtonListener());
         JButton getUsers = Gui.Buttons.createButton("Get Users", actionHandler.getUsersListener());
         JButton getHistory = Gui.Buttons.createButton("get History", actionHandler.GetHistoryListener());

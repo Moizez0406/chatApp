@@ -1,6 +1,7 @@
 package Server;
 
 import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.*;
 import java.net.Socket;
 import java.io.BufferedReader;
@@ -21,7 +22,7 @@ public class CommandHandler implements Runnable {
         this.session = "new one";
     }
 
-    public void process(String[] command) {
+    public void process(String[] command) throws NumberFormatException, UnknownHostException, IOException {
         switch (command[0]) {
             case "SendMsg":
                 Finder myFind = new Finder();
@@ -60,6 +61,19 @@ public class CommandHandler implements Runnable {
                 break;
 
             case "removeUser":
+                break;
+
+            case "reconnectUser":
+                Finder Find = new Finder();
+                if (Find.findUser(command[1], userList)) {
+                    System.out.println("Trying to reconnect...");
+                    Find.loadUser(command[1], command[2], userList);
+                    userList.removeIf(user -> user.getUsername().equals(command[2]) && !user.isActive());
+                    System.out.println("Succesfully removed");
+                    System.out.println("User reconnected");
+                } else {
+                    System.out.println("User not found");
+                }
                 break;
             default:
                 System.out.println("Invalid Command");

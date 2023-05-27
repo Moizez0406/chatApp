@@ -10,15 +10,19 @@ import java.awt.event.ActionListener;
 
 public class ActionHandler {
     private final JTextArea myName;
-    private static JTextArea chatArea = null;
     private final JTextArea userArea;
-    private static JTextArea currentChat = null;
     private final JTextField messageField;
+    private static JTextArea chatArea = null;
+    private static JTextArea currentChat = null;
     private final Socket clientSocket;
     private static String[] listUsers;
 
     public static String[] getUserList() {
         return listUsers;
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 
     public ActionHandler(JTextArea chatArea, JTextArea currentChat, JTextField messageField,
@@ -99,5 +103,11 @@ public class ActionHandler {
                 Finder.createUserDoc(username);
             }
         };
+    }
+
+    public String getDefaultName() {
+        String username = "default";
+        UserActions.setName(clientSocket, username);
+        return username;
     }
 }

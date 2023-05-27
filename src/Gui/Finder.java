@@ -16,8 +16,10 @@ public class Finder {
         if (linesArray == null) {
             return false;
         }
+
         for (String user : linesArray) {
-            user = user.substring(0, user.length() - 1);
+            // user = user.substring(0, user.length() - 1);
+            System.out.println(user + "\n");
             if (user.equals(username)) {
                 return true;
             }
@@ -27,7 +29,7 @@ public class Finder {
 
     public static void createUserDoc(String username) {
         String fileName = "D:/Programacion/Java/chatApp/resources/Users.txt";
-        String content = username + "|";
+        String content = username + "\n";
 
         try {
             FileWriter writer = new FileWriter(fileName, true); // Pass 'true' to enable append mode

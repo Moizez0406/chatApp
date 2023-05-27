@@ -5,8 +5,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class User {
-    private final Socket socket;
-    private final Socket autoSocket;
+    private Socket socket;
+    private Socket autoSocket;
     private String history = "";
     private String username;
     private boolean active = true;
@@ -45,6 +45,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setSokcet(Socket socket) {
+        this.socket = socket;
+    }
+
+    public void setAutoSokcet(Socket socket) {
+        this.autoSocket = socket;
     }
 
     public void saveHistory(String history) {
