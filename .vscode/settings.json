@@ -2,9 +2,11 @@
     "java.project.sourcePaths": ["src"],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
-        "lib/**/*.jar"
+        "D:/Programacion/Java/chatApp/lib/log4j-api-2.20.0.jar",
+        "D:/Programacion/Java/chatApp/lib/log4j-core-2.20.0.jar"
     ],
-    "editor.fontSize": 17.2,
+    "java.jdt.ls.vmargs": "--enable-preview",
+    "editor.fontSize": 17,
     "editor.formatOnSave": true,                
     "editor.fontFamily": "JetBrains Mono",    
 }
