@@ -29,6 +29,7 @@ public class CommandHandler implements Runnable {
                     Message message = new Message(myFind.getSender(), myFind.getReceiver(), command[4]);
                     message.sendMsg();
                 }
+                break;
 
             case "getUsers":
                 StringBuilder response = new StringBuilder();
@@ -55,8 +56,11 @@ public class CommandHandler implements Runnable {
 
             case "SaveChat":
                 System.out.println("Save ...");
+                userList.removeIf(user -> user.getSocket().equals(clientSocket));
                 break;
 
+            case "removeUser":
+                break;
             default:
                 System.out.println("Invalid Command");
         }
@@ -82,15 +86,13 @@ public class CommandHandler implements Runnable {
                 process(splitStrings);
             }
         } catch (SocketException e) {
-            // logger.error("Client connection reset: " + e.getMessage() + " --> " +
-            // clientSocket);
             System.out.println("Client connection reset: " + e.getMessage() + " --> " + clientSocket);
-            userList.removeIf(user -> user.getSocket().equals(clientSocket));
-            // Handle the reset connection here
+            userList.stream()
+                    .filter(user -> user.getSocket().equals(clientSocket))
+                    .forEach(user -> user.setIsActive(false));
+
         } catch (IOException e) {
-            // logger.error("An error occurred in the CommandHandler: " + e.getMessage());
         } finally {
-            // logger.info("Client disconnected: " + clientSocket);
         }
     }
 }

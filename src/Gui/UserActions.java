@@ -33,16 +33,21 @@ public class UserActions {
         }
     }
 
-    public static void sendMessage(Socket socket,JTextArea myName, String receiver, String message) {
+    public static void sendMessage(Socket socket, JTextArea myName, String receiver, String message) {
         try {
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             writer.println("SendMsg|1|" + myName.getText() + "|" + receiver + "|" + message);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            String response = reader.readLine();
+            if (response.equals("User is not active")) {
+                System.out.println("User is not active!");
+            }
         } catch (IOException error) {
             error.printStackTrace();
         }
     }
 
-    public static void automaticallyReceive(Socket autoClientSocket, JTextArea chatArea, JTextArea currentChat){
+    public static void automaticallyReceive(Socket autoClientSocket, JTextArea chatArea, JTextArea currentChat) {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(autoClientSocket.getInputStream()));
             while (true) {
@@ -57,7 +62,7 @@ public class UserActions {
         }
     }
 
-    public static String getUserList(Socket clientSocket, String message){
+    public static String getUserList(Socket clientSocket, String message) {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
             writer.println(message);
@@ -68,10 +73,10 @@ public class UserActions {
         }
     }
 
-    public static void getHistory(Socket clientSocket, String username, String receiver){
+    public static void getHistory(Socket clientSocket, String username, String receiver) {
         try {
             PrintWriter writer = new PrintWriter(clientSocket.getOutputStream(), true);
-            writer.println("GetHistory|"+username+"|"+receiver);
+            writer.println("GetHistory|" + username + "|" + receiver);
             BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             String history = reader.readLine();
             System.out.println(history);
@@ -86,4 +91,3 @@ public class UserActions {
         userArea.setText("User status: \n\n");
     }
 }
-

@@ -2,6 +2,7 @@ package Gui;
 
 import java.awt.*;
 import javax.swing.*;
+
 import java.io.IOException;
 import java.net.Socket;
 import java.util.Objects;
@@ -50,6 +51,7 @@ public class ActionHandler {
                 chatArea.append("Me: " + message + "\n");
                 messageField.setText("");
                 UserActions.sendMessage(clientSocket, myName, receiver, message);
+
             }
         };
     }
